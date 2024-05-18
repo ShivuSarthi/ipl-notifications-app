@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPL Notification App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .notification {
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>IPL Notification App</h1>
+      <div id="updates"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      // const teamId = "60d9f1149b7dcd001c8d0f23";
+      const teamId = "60d9f1149b7dcd001c8d0f22";
+
+      // Replace with actual team ID
+
+      socket.emit("subscribe", teamId);
+
+      socket.on("teamUpdate", (update) => {
+        const updatesDiv = document.getElementById("updates");
+        const notification = document.createElement("div");
+        notification.classList.add("notification");
+        notification.innerHTML = `<strong>${update.message}</strong> - ${update.timestamp}`;
+        updatesDiv.prepend(notification);
+      });
+    </script>
+  </body>
+</html>
